@@ -1,0 +1,231 @@
+{
+  "paths": {
+    "/content-analysis/summarize": {
+      "post": {
+        "description": "Sadece ADMIN ve TEACHER rolleri AI ile içerik özetleyebilir.",
+        "operationId": "ContentAnalysisController_summarize",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SummarizeContentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "İçerik başarıyla özetlendi"
+          },
+          "401": {
+            "description": "Kimlik doğrulama gerekli - Bearer token eksik veya geçersiz."
+          },
+          "403": {
+            "description": "Yetkisiz erişim - Sadece ADMIN ve TEACHER rolleri erişebilir."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "AI kullanarak içerik özetleme",
+        "tags": [
+          "content-analysis"
+        ]
+      }
+    },
+    "/content-analysis/summarize-file": {
+      "post": {
+        "description": "Sadece ADMIN ve TEACHER rolleri AI ile dosya içeriğini özetleyebilir.",
+        "operationId": "ContentAnalysisController_summarizeFile",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SummarizeFileDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Dosya içeriği başarıyla özetlendi"
+          },
+          "401": {
+            "description": "Kimlik doğrulama gerekli - Bearer token eksik veya geçersiz."
+          },
+          "403": {
+            "description": "Yetkisiz erişim - Sadece ADMIN ve TEACHER rolleri erişebilir."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "AI kullanarak dosya içeriğini özetleme",
+        "tags": [
+          "content-analysis"
+        ]
+      }
+    },
+    "/content-analysis/generate-quiz-questions": {
+      "post": {
+        "description": "Sadece ADMIN ve TEACHER rolleri LangGraph workflow kullanarak AI ile quiz soruları oluşturabilir. Gemini 2.0 Flash modeli ile güçlendirilmiştir.",
+        "operationId": "ContentAnalysisController_generateQuizQuestions",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerateQuizQuestionsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Quiz soruları başarıyla oluşturuldu"
+          },
+          "401": {
+            "description": "Kimlik doğrulama gerekli - Bearer token eksik veya geçersiz."
+          },
+          "403": {
+            "description": "Yetkisiz erişim - Sadece ADMIN ve TEACHER rolleri erişebilir."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "LangGraph ile gelişmiş quiz soruları oluşturma",
+        "tags": [
+          "content-analysis"
+        ]
+      }
+    },
+    "/content-analysis/analyze-workflow": {
+      "post": {
+        "description": "Sadece ADMIN ve TEACHER rolleri LangGraph workflow kullanarak kapsamlı içerik analizi yapabilir. Gemini 2.0 Flash modeli ile çoklu adımlı analiz sunar.",
+        "operationId": "ContentAnalysisController_analyzeContentWithWorkflow",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeContentWorkflowDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "İçerik analizi başarıyla tamamlandı"
+          },
+          "401": {
+            "description": "Kimlik doğrulama gerekli - Bearer token eksik veya geçersiz."
+          },
+          "403": {
+            "description": "Yetkisiz erişim - Sadece ADMIN ve TEACHER rolleri erişebilir."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "LangGraph workflow ile gelişmiş içerik analizi",
+        "tags": [
+          "content-analysis"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SummarizeContentDto": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Text content to summarize"
+          },
+          "videoUrl": {
+            "type": "string",
+            "description": "URL of the video (optional)"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the content (optional)"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "SummarizeFileDto": {
+        "type": "object",
+        "properties": {
+          "filePath": {
+            "type": "string",
+            "description": "Path to the file to summarize"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the content (optional)"
+          }
+        },
+        "required": [
+          "filePath"
+        ]
+      },
+      "GenerateQuizQuestionsDto": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Text content to generate questions from"
+          },
+          "numberOfQuestions": {
+            "type": "number",
+            "description": "Number of questions to generate",
+            "default": 5
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "AnalyzeContentWorkflowDto": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Text content to analyze with LangGraph workflow"
+          },
+          "analysisType": {
+            "type": "string",
+            "description": "Type of analysis to perform",
+            "enum": [
+              "summary",
+              "detailed",
+              "educational"
+            ],
+            "default": "summary"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      }
+    }
+  }
+}

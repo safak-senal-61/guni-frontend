@@ -1,0 +1,18 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "🎓 GÜNÜBİRLİK DOZ API",
+    "description": "\n      <div style=\"text-align: center; margin: 20px 0;\">\n        <h2>🚀 AI Destekli Eğitim Platformu API'si</h2>\n        <p><strong>GÜNÜBİRLİK DOZ</strong> - Yapay zeka teknolojileri ile desteklenen modern eğitim yönetim sistemi</p>\n      </div>\n      \n      <h3>🌟 Özellikler</h3>\n      <ul>\n        <li>🤖 <strong>AI Destekli İçerik Analizi:</strong> Google Gemini 2.0 Flash ile otomatik özetleme</li>\n        <li>🧠 <strong>Akıllı Quiz Sistemi:</strong> LangGraph ile otomatik soru oluşturma</li>\n        <li>👨‍🎓 <strong>Kişiselleştirilmiş Öğrenme:</strong> LangChain ile özel öneriler</li>\n        <li>🔐 <strong>Güvenli Kimlik Doğrulama:</strong> JWT Bearer Token sistemi</li>\n        <li>👥 <strong>Rol Bazlı Erişim:</strong> Öğrenci, Öğretmen, Veli ve Admin rolleri</li>\n        <li>📊 <strong>Gelişmiş Analitik:</strong> Detaylı performans raporları</li>\n        <li>📧 <strong>E-posta Entegrasyonu:</strong> Otomatik bildirimler</li>\n        <li>📁 <strong>Dosya Yönetimi:</strong> Güvenli dosya yükleme ve paylaşım</li>\n      </ul>\n      \n      <h3>🛠️ Teknoloji Yığını</h3>\n      <p><code>NestJS</code> • <code>TypeScript</code> • <code>PostgreSQL</code> • <code>Prisma ORM</code> • <code>Google AI</code> • <code>LangChain</code> • <code>LangGraph</code></p>\n      \n      <h3>📚 Kullanım Rehberi</h3>\n      <ol>\n        <li><strong>Kimlik Doğrulama:</strong> <code>/auth/signin</code> endpoint'i ile giriş yapın</li>\n        <li><strong>Token Kullanımı:</strong> Bearer token'ı Authorization header'ında gönderin</li>\n        <li><strong>Rol Kontrolü:</strong> Endpoint'lerin gerektirdiği rolleri kontrol edin</li>\n        <li><strong>API Testi:</strong> Aşağıdaki \"Try it out\" butonlarını kullanın</li>\n      </ol>\n      \n      <div style=\"background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 20px 0;\">\n        <h4>📥 JSON Export</h4>\n        <p>API dokümantasyonunu JSON formatında indirmek için: <a href=\"/api-json\" target=\"_blank\"><strong>Swagger JSON İndir</strong></a></p>\n      </div>\n    ",
+    "version": "2.0.0",
+    "contact": {
+      "name": "GÜNÜBİRLİK DOZ Geliştirici Ekibi",
+      "url": "https://github.com/gunibirlikdoz",
+      "email": "info@gunibirlikdoz.com"
+    },
+    "license": {
+      "name": "MIT License",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": []
+}

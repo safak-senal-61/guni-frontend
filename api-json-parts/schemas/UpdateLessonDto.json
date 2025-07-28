@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title of the lesson"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the lesson"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject of the lesson"
+    },
+    "topic": {
+      "type": "string",
+      "description": "Topic of the lesson"
+    },
+    "difficulty": {
+      "type": "string",
+      "description": "Difficulty level of the lesson"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "LESSON",
+        "VIDEO",
+        "QUIZ",
+        "EXERCISE",
+        "INTERACTIVE"
+      ],
+      "description": "Type of content (e.g., LESSON, VIDEO, QUIZ)"
+    },
+    "duration": {
+      "type": "number",
+      "description": "Duration of the lesson in minutes"
+    },
+    "thumbnail": {
+      "type": "string",
+      "description": "Thumbnail URL"
+    },
+    "tags": {
+      "description": "Tags for the lesson",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "prerequisites": {
+      "description": "Prerequisites for the lesson",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "learningObjectives": {
+      "description": "Learning objectives of the lesson",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

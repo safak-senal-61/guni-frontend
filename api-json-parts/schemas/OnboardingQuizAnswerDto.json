@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "questionId": {
+      "type": "string",
+      "description": "Quiz question ID"
+    },
+    "answer": {
+      "type": "string",
+      "description": "User answer"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject of the question"
+    }
+  },
+  "required": [
+    "questionId",
+    "answer",
+    "subject"
+  ]
+}

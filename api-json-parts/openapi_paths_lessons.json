@@ -1,0 +1,323 @@
+{
+  "paths": {
+    "/lessons": {
+      "post": {
+        "description": "Sadece ADMIN ve TEACHER rolleri ders oluşturabilir.",
+        "operationId": "LessonsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLessonDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Ders başarıyla oluşturuldu."
+          },
+          "401": {
+            "description": "Kimlik doğrulama gerekli - Bearer token eksik veya geçersiz."
+          },
+          "403": {
+            "description": "Yetkisiz erişim - Sadece ADMIN ve TEACHER rolleri ders oluşturabilir."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Yeni bir ders oluştur",
+        "tags": [
+          "lessons"
+        ]
+      },
+      "get": {
+        "description": "ADMIN, TEACHER ve STUDENT rolleri dersleri görüntüleyebilir.",
+        "operationId": "LessonsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Tüm dersleri döndürür."
+          },
+          "401": {
+            "description": "Kimlik doğrulama gerekli - Bearer token eksik veya geçersiz."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Tüm dersleri getir",
+        "tags": [
+          "lessons"
+        ]
+      }
+    },
+    "/lessons/{id}": {
+      "get": {
+        "description": "ADMIN, TEACHER ve STUDENT rolleri ders detaylarını görüntüleyebilir.",
+        "operationId": "LessonsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tek bir ders döndürür."
+          },
+          "401": {
+            "description": "Kimlik doğrulama gerekli - Bearer token eksik veya geçersiz."
+          },
+          "404": {
+            "description": "Ders bulunamadı."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "ID ile ders getir",
+        "tags": [
+          "lessons"
+        ]
+      },
+      "patch": {
+        "description": "Sadece ADMIN ve TEACHER rolleri ders güncelleyebilir.",
+        "operationId": "LessonsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateLessonDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ders başarıyla güncellendi."
+          },
+          "401": {
+            "description": "Kimlik doğrulama gerekli - Bearer token eksik veya geçersiz."
+          },
+          "403": {
+            "description": "Yetkisiz erişim - Sadece ADMIN ve TEACHER rolleri ders güncelleyebilir."
+          },
+          "404": {
+            "description": "Ders bulunamadı."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "ID ile ders güncelle",
+        "tags": [
+          "lessons"
+        ]
+      },
+      "delete": {
+        "description": "Sadece ADMIN ve TEACHER rolleri ders silebilir.",
+        "operationId": "LessonsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ders başarıyla silindi."
+          },
+          "401": {
+            "description": "Kimlik doğrulama gerekli - Bearer token eksik veya geçersiz."
+          },
+          "403": {
+            "description": "Yetkisiz erişim - Sadece ADMIN ve TEACHER rolleri ders silebilir."
+          },
+          "404": {
+            "description": "Ders bulunamadı."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "ID ile ders sil",
+        "tags": [
+          "lessons"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateLessonDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the lesson"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the lesson"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Subject of the lesson"
+          },
+          "topic": {
+            "type": "string",
+            "description": "Topic of the lesson"
+          },
+          "difficulty": {
+            "type": "string",
+            "description": "Difficulty level of the lesson"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "LESSON",
+              "VIDEO",
+              "QUIZ",
+              "EXERCISE",
+              "INTERACTIVE"
+            ],
+            "description": "Type of content (e.g., LESSON, VIDEO, QUIZ)"
+          },
+          "duration": {
+            "type": "number",
+            "description": "Duration of the lesson in minutes"
+          },
+          "thumbnail": {
+            "type": "string",
+            "description": "Thumbnail URL"
+          },
+          "tags": {
+            "description": "Tags for the lesson",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "prerequisites": {
+            "description": "Prerequisites for the lesson",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "learningObjectives": {
+            "description": "Learning objectives of the lesson",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "subject",
+          "difficulty",
+          "type"
+        ]
+      },
+      "UpdateLessonDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the lesson"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the lesson"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Subject of the lesson"
+          },
+          "topic": {
+            "type": "string",
+            "description": "Topic of the lesson"
+          },
+          "difficulty": {
+            "type": "string",
+            "description": "Difficulty level of the lesson"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "LESSON",
+              "VIDEO",
+              "QUIZ",
+              "EXERCISE",
+              "INTERACTIVE"
+            ],
+            "description": "Type of content (e.g., LESSON, VIDEO, QUIZ)"
+          },
+          "duration": {
+            "type": "number",
+            "description": "Duration of the lesson in minutes"
+          },
+          "thumbnail": {
+            "type": "string",
+            "description": "Thumbnail URL"
+          },
+          "tags": {
+            "description": "Tags for the lesson",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "prerequisites": {
+            "description": "Prerequisites for the lesson",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "learningObjectives": {
+            "description": "Learning objectives of the lesson",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

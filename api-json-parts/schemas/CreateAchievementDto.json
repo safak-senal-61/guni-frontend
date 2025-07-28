@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title of the achievement",
+      "example": "Quiz Master"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the achievement",
+      "example": "Complete 10 quizzes with 80% or higher score"
+    },
+    "category": {
+      "type": "string",
+      "description": "Category of the achievement",
+      "enum": [
+        "PROGRESS",
+        "SUBJECT_MASTERY",
+        "SOCIAL",
+        "GAMIFICATION",
+        "SPECIAL"
+      ]
+    },
+    "points": {
+      "type": "number",
+      "description": "Points awarded for this achievement",
+      "example": 100,
+      "minimum": 1
+    },
+    "icon": {
+      "type": "string",
+      "description": "Icon identifier for the achievement",
+      "example": "trophy-icon"
+    },
+    "requirement": {
+      "type": "number",
+      "description": "Requirement value to unlock this achievement",
+      "example": 10,
+      "minimum": 1
+    }
+  },
+  "required": [
+    "title",
+    "description",
+    "category",
+    "points",
+    "requirement"
+  ]
+}

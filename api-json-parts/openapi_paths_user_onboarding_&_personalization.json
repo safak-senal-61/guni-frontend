@@ -1,0 +1,518 @@
+{
+  "paths": {
+    "/user-onboarding/profile": {
+      "put": {
+        "description": "Updates user profile information including age, gender, grade level, learning preferences, and weak subjects.",
+        "operationId": "UserOnboardingController_updateProfile",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserProfileDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User profile updated successfully"
+          },
+          "400": {
+            "description": "Bad Request - Invalid input data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update user profile for onboarding",
+        "tags": [
+          "User Onboarding & Personalization"
+        ]
+      }
+    },
+    "/user-onboarding/quiz/generate": {
+      "post": {
+        "description": "Generates a personalized assessment quiz using LangGraph and Gemini 2.0 Flash to identify user's weak subjects and learning needs.",
+        "operationId": "UserOnboardingController_generateOnboardingQuiz",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OnboardingQuizDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Onboarding quiz generated successfully using AI"
+          },
+          "400": {
+            "description": "Bad Request - Invalid quiz parameters"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Generate personalized onboarding quiz with AI",
+        "tags": [
+          "User Onboarding & Personalization"
+        ]
+      }
+    },
+    "/user-onboarding/quiz/submit": {
+      "post": {
+        "description": "Submits quiz answers and uses LangGraph with Gemini 2.0 Flash to analyze results, identify weak subjects, and generate personalized recommendations.",
+        "operationId": "UserOnboardingController_submitOnboardingQuiz",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitOnboardingQuizDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Quiz answers analyzed successfully with AI-powered insights"
+          },
+          "400": {
+            "description": "Bad Request - Invalid quiz answers"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Submit onboarding quiz answers for AI analysis",
+        "tags": [
+          "User Onboarding & Personalization"
+        ]
+      }
+    },
+    "/user-onboarding/homepage/personalized": {
+      "post": {
+        "description": "Creates a personalized homepage using LangGraph and Gemini 2.0 Flash based on user's weak subjects, learning style, progress, and preferences.",
+        "operationId": "UserOnboardingController_generatePersonalizedHomepage",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonalizedHomepageDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Personalized homepage generated successfully with AI-powered content"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Generate personalized homepage with AI recommendations",
+        "tags": [
+          "User Onboarding & Personalization"
+        ]
+      },
+      "get": {
+        "description": "Retrieves personalized homepage content using AI with default recommendation settings.",
+        "operationId": "UserOnboardingController_getPersonalizedHomepage",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Personalized homepage retrieved successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get personalized homepage with default settings",
+        "tags": [
+          "User Onboarding & Personalization"
+        ]
+      }
+    },
+    "/user-onboarding/profile/{userId}": {
+      "get": {
+        "description": "Retrieves user profile information for administrative purposes.",
+        "operationId": "UserOnboardingController_getUserProfile",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "description": "User ID to retrieve profile for",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User profile retrieved successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get user profile by ID (Admin/Teacher only)",
+        "tags": [
+          "User Onboarding & Personalization"
+        ]
+      }
+    },
+    "/user-onboarding/recommendations/refresh": {
+      "post": {
+        "description": "Regenerates personalized recommendations using latest user progress and AI analysis with LangGraph and Gemini 2.0 Flash.",
+        "operationId": "UserOnboardingController_refreshRecommendations",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Recommendations refreshed successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Refresh AI-powered recommendations",
+        "tags": [
+          "User Onboarding & Personalization"
+        ]
+      }
+    },
+    "/user-onboarding/analytics/weak-subjects": {
+      "get": {
+        "description": "Provides detailed analysis of user's weak subjects with AI-generated improvement strategies.",
+        "operationId": "UserOnboardingController_getWeakSubjectsAnalysis",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Weak subjects analysis retrieved successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get detailed weak subjects analysis",
+        "tags": [
+          "User Onboarding & Personalization"
+        ]
+      }
+    },
+    "/user-onboarding/parent-requests": {
+      "get": {
+        "description": "Retrieves all pending parent connection requests for the student.",
+        "operationId": "UserOnboardingController_getParentRequests",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Parent connection requests retrieved successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get pending parent connection requests",
+        "tags": [
+          "User Onboarding & Personalization"
+        ]
+      }
+    },
+    "/user-onboarding/parent-requests/{connectionId}/approve": {
+      "put": {
+        "description": "Approves a parent connection request, allowing the parent to monitor student progress.",
+        "operationId": "UserOnboardingController_approveParentRequest",
+        "parameters": [
+          {
+            "name": "connectionId",
+            "required": true,
+            "in": "path",
+            "description": "Connection request ID to approve",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Parent connection request approved successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          },
+          "404": {
+            "description": "Connection request not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Approve parent connection request",
+        "tags": [
+          "User Onboarding & Personalization"
+        ]
+      }
+    },
+    "/user-onboarding/parent-requests/{connectionId}/reject": {
+      "put": {
+        "description": "Rejects a parent connection request.",
+        "operationId": "UserOnboardingController_rejectParentRequest",
+        "parameters": [
+          {
+            "name": "connectionId",
+            "required": true,
+            "in": "path",
+            "description": "Connection request ID to reject",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Parent connection request rejected successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          },
+          "404": {
+            "description": "Connection request not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reject parent connection request",
+        "tags": [
+          "User Onboarding & Personalization"
+        ]
+      }
+    },
+    "/user-onboarding/connected-parents": {
+      "get": {
+        "description": "Retrieves all approved parent connections for the student.",
+        "operationId": "UserOnboardingController_getConnectedParents",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Connected parents retrieved successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get connected parents",
+        "tags": [
+          "User Onboarding & Personalization"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UpdateUserProfileDto": {
+        "type": "object",
+        "properties": {
+          "age": {
+            "type": "number",
+            "description": "User age"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "OTHER",
+              "PREFER_NOT_TO_SAY"
+            ],
+            "description": "User gender"
+          },
+          "gradeLevel": {
+            "type": "string",
+            "enum": [
+              "GRADE_1",
+              "GRADE_2",
+              "GRADE_3",
+              "GRADE_4",
+              "GRADE_5",
+              "GRADE_6",
+              "GRADE_7",
+              "GRADE_8",
+              "GRADE_9",
+              "GRADE_10",
+              "GRADE_11",
+              "GRADE_12"
+            ],
+            "description": "User grade level"
+          },
+          "learningStyle": {
+            "type": "string",
+            "enum": [
+              "VISUAL",
+              "AUDITORY",
+              "KINESTHETIC",
+              "READ_WRITE"
+            ],
+            "description": "Preferred learning style"
+          },
+          "interests": {
+            "description": "User interests",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "goals": {
+            "description": "Learning goals",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "studyHours": {
+            "type": "number",
+            "description": "Preferred daily study hours"
+          },
+          "difficultyPreference": {
+            "type": "string",
+            "description": "Difficulty preference"
+          },
+          "weakSubjects": {
+            "description": "Known weak subjects",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "OnboardingQuizDto": {
+        "type": "object",
+        "properties": {
+          "subjects": {
+            "description": "Subjects to assess",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "questionsPerSubject": {
+            "type": "number",
+            "description": "Number of questions per subject"
+          }
+        },
+        "required": [
+          "subjects"
+        ]
+      },
+      "SubmitOnboardingQuizDto": {
+        "type": "object",
+        "properties": {
+          "answers": {
+            "description": "Quiz answers",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OnboardingQuizAnswerDto"
+            }
+          }
+        },
+        "required": [
+          "answers"
+        ]
+      },
+      "PersonalizedHomepageDto": {
+        "type": "object",
+        "properties": {
+          "lessonCount": {
+            "type": "number",
+            "description": "Number of recommended lessons"
+          },
+          "includeQuizzes": {
+            "type": "boolean",
+            "description": "Include quiz recommendations"
+          },
+          "includeProgress": {
+            "type": "boolean",
+            "description": "Include progress analytics"
+          }
+        }
+      }
+    }
+  }
+}

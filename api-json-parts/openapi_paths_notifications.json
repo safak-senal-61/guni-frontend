@@ -1,0 +1,122 @@
+{
+  "paths": {
+    "/notifications": {
+      "post": {
+        "operationId": "NotificationsController_createNotification",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotificationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Notifications"
+        ]
+      },
+      "get": {
+        "operationId": "NotificationsController_getUserNotifications",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Notifications"
+        ]
+      }
+    },
+    "/notifications/unread-count": {
+      "get": {
+        "operationId": "NotificationsController_getUnreadCount",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Notifications"
+        ]
+      }
+    },
+    "/notifications/{id}/read": {
+      "patch": {
+        "operationId": "NotificationsController_markAsRead",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Notifications"
+        ]
+      }
+    },
+    "/notifications/mark-all-read": {
+      "patch": {
+        "operationId": "NotificationsController_markAllAsRead",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Notifications"
+        ]
+      }
+    },
+    "/notifications/{id}": {
+      "delete": {
+        "operationId": "NotificationsController_deleteNotification",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Notifications"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateNotificationDto": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}

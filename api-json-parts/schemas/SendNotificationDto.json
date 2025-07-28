@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "receiverId": {
+      "type": "string",
+      "description": "Alıcı ID'si",
+      "example": "uuid-string"
+    },
+    "title": {
+      "type": "string",
+      "description": "Bildirim başlığı",
+      "example": "Tebrikler!"
+    },
+    "message": {
+      "type": "string",
+      "description": "Bildirim mesajı",
+      "example": "Matematik quizinde harika bir performans sergiledi!"
+    },
+    "type": {
+      "type": "string",
+      "description": "Bildirim tipi",
+      "example": "achievement",
+      "enum": [
+        "achievement",
+        "progress",
+        "quiz_completed",
+        "lesson_completed",
+        "parent_request",
+        "encouragement"
+      ]
+    },
+    "data": {
+      "type": "object",
+      "description": "Ek veri (JSON format)",
+      "example": {
+        "quizScore": 95,
+        "subject": "Mathematics"
+      }
+    }
+  },
+  "required": [
+    "receiverId",
+    "title",
+    "message",
+    "type"
+  ]
+}

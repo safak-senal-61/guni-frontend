@@ -1,0 +1,118 @@
+{
+  "paths": {
+    "/student-panel/dashboard": {
+      "get": {
+        "operationId": "StudentPanelController_getDashboard",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "StudentPanel"
+        ]
+      }
+    },
+    "/student-panel/progress": {
+      "get": {
+        "operationId": "StudentPanelController_getProgress",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "StudentPanel"
+        ]
+      }
+    },
+    "/student-panel/stats": {
+      "get": {
+        "operationId": "StudentPanelController_getStats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "StudentPanel"
+        ]
+      }
+    },
+    "/student-panel/upcoming-lessons": {
+      "get": {
+        "operationId": "StudentPanelController_getUpcomingLessons",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "StudentPanel"
+        ]
+      }
+    },
+    "/student-panel/recommended-quizzes": {
+      "get": {
+        "operationId": "StudentPanelController_getRecommendedQuizzes",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "StudentPanel"
+        ]
+      }
+    },
+    "/student-panel/recent-quiz-results": {
+      "get": {
+        "operationId": "StudentPanelController_getRecentQuizResults",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "StudentPanel"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}

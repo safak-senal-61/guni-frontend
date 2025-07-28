@@ -1,0 +1,419 @@
+{
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "description": "Yeni kullanıcı kaydı oluşturur. Varsayılan rol: STUDENT",
+        "operationId": "AuthController_signup",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignupDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Kullanıcı başarıyla oluşturuldu"
+          },
+          "400": {
+            "description": "Hatalı istek - Geçersiz e-posta formatı veya eksik alanlar"
+          },
+          "403": {
+            "description": "E-posta zaten kullanımda"
+          }
+        },
+        "summary": "Yeni kullanıcı oluştur",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "description": "E-posta ve şifre ile kullanıcı girişi yapar. Başarılı girişte access ve refresh token döner.",
+        "operationId": "AuthController_signin",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Kullanıcı başarıyla giriş yaptı - Access ve refresh token döndürülür"
+          },
+          "400": {
+            "description": "Hatalı istek - Eksik e-posta veya şifre"
+          },
+          "401": {
+            "description": "Geçersiz kimlik bilgileri - Yanlış e-posta veya şifre"
+          }
+        },
+        "summary": "Kullanıcı girişi",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "description": "Kullanıcının refresh token'ını geçersiz kılar ve çıkış yapar.",
+        "operationId": "AuthController_logout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Kullanıcı başarıyla çıkış yaptı"
+          },
+          "401": {
+            "description": "Kimlik doğrulama gerekli - Bearer token eksik veya geçersiz"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Kullanıcı çıkışı",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "description": "Refresh token kullanarak yeni access token alır.",
+        "operationId": "AuthController_refresh",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Token başarıyla yenilendi"
+          },
+          "401": {
+            "description": "Geçersiz refresh token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Erişim token'ını yenile",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "description": "Giriş yapmış kullanıcının profil bilgilerini döndürür.",
+        "operationId": "AuthController_me",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Kullanıcı bilgileri döndürüldü"
+          },
+          "401": {
+            "description": "Kimlik doğrulama gerekli - Bearer token eksik veya geçersiz"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Mevcut kullanıcıyı getir",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/verify-email": {
+      "post": {
+        "operationId": "AuthController_verifyEmail",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyEmailDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email verified successfully"
+          },
+          "400": {
+            "description": "Invalid or expired verification token"
+          }
+        },
+        "summary": "Verify email address",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/resend-verification": {
+      "post": {
+        "operationId": "AuthController_resendVerification",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendVerificationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Verification email sent"
+          },
+          "400": {
+            "description": "Email already verified"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Resend email verification",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/forgot-password": {
+      "post": {
+        "operationId": "AuthController_forgotPassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset email sent if user exists"
+          }
+        },
+        "summary": "Request password reset",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/reset-password": {
+      "post": {
+        "operationId": "AuthController_resetPassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset successfully"
+          },
+          "400": {
+            "description": "Invalid or expired reset token"
+          }
+        },
+        "summary": "Reset password with token",
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/change-password": {
+      "post": {
+        "operationId": "AuthController_changePassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password changed successfully"
+          },
+          "400": {
+            "description": "Current password is incorrect"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Change password for authenticated user",
+        "tags": [
+          "auth"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SignupDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "test@example.com",
+            "description": "User email"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123",
+            "description": "User password"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John",
+            "description": "User first name"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe",
+            "description": "User last name"
+          }
+        },
+        "required": [
+          "email",
+          "password",
+          "firstName",
+          "lastName"
+        ]
+      },
+      "AuthDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "test@example.com",
+            "description": "User email"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123",
+            "description": "User password"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "VerifyEmailDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "abc123def456",
+            "description": "Email verification token"
+          }
+        },
+        "required": [
+          "token"
+        ]
+      },
+      "ResendVerificationDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "test@example.com",
+            "description": "User email"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "ForgotPasswordDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "test@example.com",
+            "description": "User email"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "ResetPasswordDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "abc123def456",
+            "description": "Password reset token"
+          },
+          "newPassword": {
+            "type": "string",
+            "example": "newpassword123",
+            "description": "New password"
+          }
+        },
+        "required": [
+          "token",
+          "newPassword"
+        ]
+      },
+      "ChangePasswordDto": {
+        "type": "object",
+        "properties": {
+          "currentPassword": {
+            "type": "string",
+            "example": "oldpassword123",
+            "description": "Current password"
+          },
+          "newPassword": {
+            "type": "string",
+            "example": "newpassword123",
+            "description": "New password"
+          }
+        },
+        "required": [
+          "currentPassword",
+          "newPassword"
+        ]
+      }
+    }
+  }
+}

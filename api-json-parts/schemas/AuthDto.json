@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "example": "test@example.com",
+      "description": "User email"
+    },
+    "password": {
+      "type": "string",
+      "example": "password123",
+      "description": "User password"
+    }
+  },
+  "required": [
+    "email",
+    "password"
+  ]
+}

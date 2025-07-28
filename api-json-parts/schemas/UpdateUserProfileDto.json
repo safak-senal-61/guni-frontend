@@ -1,0 +1,76 @@
+{
+  "type": "object",
+  "properties": {
+    "age": {
+      "type": "number",
+      "description": "User age"
+    },
+    "gender": {
+      "type": "string",
+      "enum": [
+        "MALE",
+        "FEMALE",
+        "OTHER",
+        "PREFER_NOT_TO_SAY"
+      ],
+      "description": "User gender"
+    },
+    "gradeLevel": {
+      "type": "string",
+      "enum": [
+        "GRADE_1",
+        "GRADE_2",
+        "GRADE_3",
+        "GRADE_4",
+        "GRADE_5",
+        "GRADE_6",
+        "GRADE_7",
+        "GRADE_8",
+        "GRADE_9",
+        "GRADE_10",
+        "GRADE_11",
+        "GRADE_12"
+      ],
+      "description": "User grade level"
+    },
+    "learningStyle": {
+      "type": "string",
+      "enum": [
+        "VISUAL",
+        "AUDITORY",
+        "KINESTHETIC",
+        "READ_WRITE"
+      ],
+      "description": "Preferred learning style"
+    },
+    "interests": {
+      "description": "User interests",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "goals": {
+      "description": "Learning goals",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "studyHours": {
+      "type": "number",
+      "description": "Preferred daily study hours"
+    },
+    "difficultyPreference": {
+      "type": "string",
+      "description": "Difficulty preference"
+    },
+    "weakSubjects": {
+      "description": "Known weak subjects",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "paths": {
+    "/messages": {
+      "post": {
+        "operationId": "MessagesController_sendMessage",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMessageDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Messages"
+        ]
+      }
+    },
+    "/messages/conversations": {
+      "get": {
+        "operationId": "MessagesController_getUserConversations",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Messages"
+        ]
+      }
+    },
+    "/messages/conversation/{userId}": {
+      "get": {
+        "operationId": "MessagesController_getConversation",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Messages"
+        ]
+      }
+    },
+    "/messages/unread-count": {
+      "get": {
+        "operationId": "MessagesController_getUnreadMessageCount",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Messages"
+        ]
+      }
+    },
+    "/messages/mark-read/{senderId}": {
+      "post": {
+        "operationId": "MessagesController_markMessagesAsRead",
+        "parameters": [
+          {
+            "name": "senderId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Messages"
+        ]
+      }
+    },
+    "/messages/{messageId}": {
+      "delete": {
+        "operationId": "MessagesController_deleteMessage",
+        "parameters": [
+          {
+            "name": "messageId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Messages"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateMessageDto": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}

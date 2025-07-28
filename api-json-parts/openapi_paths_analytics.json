@@ -1,0 +1,133 @@
+{
+  "paths": {
+    "/analytics/overview": {
+      "get": {
+        "operationId": "AnalyticsController_getOverview",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Analytics"
+        ]
+      }
+    },
+    "/analytics/engagement": {
+      "get": {
+        "operationId": "AnalyticsController_getUserEngagement",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Analytics"
+        ]
+      }
+    },
+    "/analytics/learning-progress": {
+      "get": {
+        "operationId": "AnalyticsController_getLearningProgress",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Analytics"
+        ]
+      }
+    },
+    "/analytics/content": {
+      "get": {
+        "operationId": "AnalyticsController_getContentAnalytics",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Analytics"
+        ]
+      }
+    },
+    "/analytics/timeline": {
+      "get": {
+        "operationId": "AnalyticsController_getActivityTimeline",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Analytics"
+        ]
+      }
+    },
+    "/analytics/parent-engagement": {
+      "get": {
+        "operationId": "AnalyticsController_getParentEngagement",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Analytics"
+        ]
+      }
+    },
+    "/analytics/achievements": {
+      "get": {
+        "operationId": "AnalyticsController_getAchievementStats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Analytics"
+        ]
+      }
+    },
+    "/analytics/top-performers": {
+      "get": {
+        "operationId": "AnalyticsController_getTopPerformers",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Analytics"
+        ]
+      }
+    },
+    "/analytics/popular-content": {
+      "get": {
+        "operationId": "AnalyticsController_getPopularContent",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Analytics"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "answers": {
+      "description": "Quiz answers",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OnboardingQuizAnswerDto"
+      }
+    }
+  },
+  "required": [
+    "answers"
+  ]
+}

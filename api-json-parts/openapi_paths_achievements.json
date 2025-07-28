@@ -1,0 +1,219 @@
+{
+  "paths": {
+    "/achievements": {
+      "post": {
+        "description": "Creates a new achievement. Only ADMIN role can create achievements.",
+        "operationId": "AchievementsController_createAchievement",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAchievementDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Achievement created successfully"
+          },
+          "400": {
+            "description": "Bad request - Invalid input data"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          },
+          "403": {
+            "description": "Forbidden - Only ADMIN role can create achievements"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create new achievement",
+        "tags": [
+          "achievements"
+        ]
+      },
+      "get": {
+        "description": "Retrieves all available achievements in the system.",
+        "operationId": "AchievementsController_getAllAchievements",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "All achievements retrieved successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all achievements",
+        "tags": [
+          "achievements"
+        ]
+      }
+    },
+    "/achievements/my-achievements": {
+      "get": {
+        "description": "Retrieves all achievements unlocked by the current user.",
+        "operationId": "AchievementsController_getUserAchievements",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "User achievements retrieved successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get user achievements",
+        "tags": [
+          "achievements"
+        ]
+      }
+    },
+    "/achievements/check-unlocks": {
+      "post": {
+        "operationId": "AchievementsController_checkAndUnlockAchievements",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "achievements"
+        ]
+      }
+    },
+    "/achievements/leaderboard": {
+      "get": {
+        "operationId": "AchievementsController_getLeaderboard",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "achievements"
+        ]
+      }
+    },
+    "/achievements/unlock/{achievementId}": {
+      "post": {
+        "operationId": "AchievementsController_unlockAchievement",
+        "parameters": [
+          {
+            "name": "achievementId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "achievements"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateAchievementDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the achievement",
+            "example": "Quiz Master"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the achievement",
+            "example": "Complete 10 quizzes with 80% or higher score"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the achievement",
+            "enum": [
+              "PROGRESS",
+              "SUBJECT_MASTERY",
+              "SOCIAL",
+              "GAMIFICATION",
+              "SPECIAL"
+            ]
+          },
+          "points": {
+            "type": "number",
+            "description": "Points awarded for this achievement",
+            "example": 100,
+            "minimum": 1
+          },
+          "icon": {
+            "type": "string",
+            "description": "Icon identifier for the achievement",
+            "example": "trophy-icon"
+          },
+          "requirement": {
+            "type": "number",
+            "description": "Requirement value to unlock this achievement",
+            "example": 10,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "category",
+          "points",
+          "requirement"
+        ]
+      }
+    }
+  }
+}

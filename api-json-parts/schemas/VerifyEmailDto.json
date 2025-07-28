@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "token": {
+      "type": "string",
+      "example": "abc123def456",
+      "description": "Email verification token"
+    }
+  },
+  "required": [
+    "token"
+  ]
+}

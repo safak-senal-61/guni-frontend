@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "lessonId": {
+      "type": "string",
+      "description": "ID of the lesson this quiz belongs to (optional)"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the quiz"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the quiz"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject of the quiz"
+    },
+    "topic": {
+      "type": "string",
+      "description": "Topic of the quiz"
+    },
+    "difficulty": {
+      "type": "string",
+      "description": "Difficulty level of the quiz"
+    },
+    "quizType": {
+      "type": "string",
+      "enum": [
+        "MULTIPLE_CHOICE",
+        "OPEN_ENDED",
+        "DRAG_DROP"
+      ],
+      "description": "Type of quiz (e.g., MULTIPLE_CHOICE, OPEN_ENDED)"
+    },
+    "questionCount": {
+      "type": "number",
+      "description": "Number of questions in the quiz"
+    },
+    "passingScore": {
+      "type": "number",
+      "description": "Passing score for the quiz (percentage)"
+    },
+    "questions": {
+      "type": "object",
+      "description": "JSON array of question objects"
+    }
+  },
+  "required": [
+    "title",
+    "subject",
+    "difficulty",
+    "quizType",
+    "questionCount",
+    "passingScore",
+    "questions"
+  ]
+}

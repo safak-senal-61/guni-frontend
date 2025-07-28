@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "text": {
+      "type": "string",
+      "description": "Text content to analyze with LangGraph workflow"
+    },
+    "analysisType": {
+      "type": "string",
+      "description": "Type of analysis to perform",
+      "enum": [
+        "summary",
+        "detailed",
+        "educational"
+      ],
+      "default": "summary"
+    }
+  },
+  "required": [
+    "text"
+  ]
+}

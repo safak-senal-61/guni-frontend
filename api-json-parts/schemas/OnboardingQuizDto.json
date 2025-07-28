@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "subjects": {
+      "description": "Subjects to assess",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "questionsPerSubject": {
+      "type": "number",
+      "description": "Number of questions per subject"
+    }
+  },
+  "required": [
+    "subjects"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "studentEmail": {
+      "type": "string",
+      "description": "Öğrencinin email adresi",
+      "example": "student@example.com"
+    },
+    "inviteCode": {
+      "type": "string",
+      "description": "Bağlantı için özel davet kodu",
+      "example": "ABC123"
+    }
+  },
+  "required": [
+    "studentEmail"
+  ]
+}

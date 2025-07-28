@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "lessonCount": {
+      "type": "number",
+      "description": "Number of recommended lessons"
+    },
+    "includeQuizzes": {
+      "type": "boolean",
+      "description": "Include quiz recommendations"
+    },
+    "includeProgress": {
+      "type": "boolean",
+      "description": "Include progress analytics"
+    }
+  }
+}

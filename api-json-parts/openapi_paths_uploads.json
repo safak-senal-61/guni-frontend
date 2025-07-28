@@ -1,0 +1,53 @@
+{
+  "paths": {
+    "/uploads/file": {
+      "post": {
+        "description": "Sadece ADMIN ve TEACHER rolleri dosya yükleyebilir. Maksimum dosya boyutu: 10MB",
+        "operationId": "UploadsController_uploadFile",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Dosya başarıyla yüklendi"
+          },
+          "400": {
+            "description": "Hatalı istek - Dosya boyutu çok büyük veya desteklenmeyen format"
+          },
+          "401": {
+            "description": "Kimlik doğrulama gerekli - Bearer token eksik veya geçersiz."
+          },
+          "403": {
+            "description": "Yetkisiz erişim - Sadece ADMIN ve TEACHER rolleri dosya yükleyebilir."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Tek dosya yükleme",
+        "tags": [
+          "uploads"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}

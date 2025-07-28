@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "filePath": {
+      "type": "string",
+      "description": "Path to the file to summarize"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the content (optional)"
+    }
+  },
+  "required": [
+    "filePath"
+  ]
+}

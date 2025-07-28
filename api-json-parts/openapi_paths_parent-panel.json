@@ -1,0 +1,523 @@
+{
+  "paths": {
+    "/parent-panel/profile": {
+      "get": {
+        "description": "Retrieves the parent profile information including connected students.",
+        "operationId": "ParentPanelController_getProfile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Parent profile retrieved successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get parent profile",
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/connect-student": {
+      "post": {
+        "description": "Sends a connection request to a student for monitoring their progress.",
+        "operationId": "ParentPanelController_connectStudent",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConnectStudentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Connection request sent successfully"
+          },
+          "400": {
+            "description": "Bad request - Invalid student email or connection already exists"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Request student connection",
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/pending-connections": {
+      "get": {
+        "description": "Retrieves all pending student connection requests.",
+        "operationId": "ParentPanelController_getPendingConnections",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Pending connections retrieved successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get pending connections",
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/connected-students": {
+      "get": {
+        "description": "Retrieves all approved student connections.",
+        "operationId": "ParentPanelController_getConnectedStudents",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Connected students retrieved successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid or missing authentication token"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get connected students",
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/student-progress/{studentId}": {
+      "get": {
+        "operationId": "ParentPanelController_getStudentDetailedProgress",
+        "parameters": [
+          {
+            "name": "studentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "subject",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/student-analytics/{studentId}": {
+      "get": {
+        "operationId": "ParentPanelController_getStudentAnalytics",
+        "parameters": [
+          {
+            "name": "studentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/send-message": {
+      "post": {
+        "operationId": "ParentPanelController_sendMessageToStudent",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/dashboard-summary": {
+      "get": {
+        "operationId": "ParentPanelController_getDashboardSummary",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/student-schedule/{studentId}": {
+      "get": {
+        "operationId": "ParentPanelController_getStudentSchedule",
+        "parameters": [
+          {
+            "name": "studentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/set-study-goals": {
+      "post": {
+        "operationId": "ParentPanelController_setStudyGoals",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/send-notification": {
+      "post": {
+        "operationId": "ParentPanelController_sendNotification",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendNotificationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/notifications": {
+      "get": {
+        "operationId": "ParentPanelController_getNotifications",
+        "parameters": [
+          {
+            "name": "page",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/notifications/{notificationId}/read": {
+      "put": {
+        "operationId": "ParentPanelController_markNotificationAsRead",
+        "parameters": [
+          {
+            "name": "notificationId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/weekly-summary/{studentId}": {
+      "post": {
+        "operationId": "ParentPanelController_generateWeeklySummary",
+        "parameters": [
+          {
+            "name": "studentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/student-summary/{studentId}": {
+      "get": {
+        "operationId": "ParentPanelController_getStudentProgressSummary",
+        "parameters": [
+          {
+            "name": "studentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "period",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    },
+    "/parent-panel/dashboard-stats": {
+      "get": {
+        "operationId": "ParentPanelController_getDashboardStats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "parent-panel"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ConnectStudentDto": {
+        "type": "object",
+        "properties": {
+          "studentEmail": {
+            "type": "string",
+            "description": "Öğrencinin email adresi",
+            "example": "student@example.com"
+          },
+          "inviteCode": {
+            "type": "string",
+            "description": "Bağlantı için özel davet kodu",
+            "example": "ABC123"
+          }
+        },
+        "required": [
+          "studentEmail"
+        ]
+      },
+      "SendNotificationDto": {
+        "type": "object",
+        "properties": {
+          "receiverId": {
+            "type": "string",
+            "description": "Alıcı ID'si",
+            "example": "uuid-string"
+          },
+          "title": {
+            "type": "string",
+            "description": "Bildirim başlığı",
+            "example": "Tebrikler!"
+          },
+          "message": {
+            "type": "string",
+            "description": "Bildirim mesajı",
+            "example": "Matematik quizinde harika bir performans sergiledi!"
+          },
+          "type": {
+            "type": "string",
+            "description": "Bildirim tipi",
+            "example": "achievement",
+            "enum": [
+              "achievement",
+              "progress",
+              "quiz_completed",
+              "lesson_completed",
+              "parent_request",
+              "encouragement"
+            ]
+          },
+          "data": {
+            "type": "object",
+            "description": "Ek veri (JSON format)",
+            "example": {
+              "quizScore": 95,
+              "subject": "Mathematics"
+            }
+          }
+        },
+        "required": [
+          "receiverId",
+          "title",
+          "message",
+          "type"
+        ]
+      }
+    }
+  }
+}

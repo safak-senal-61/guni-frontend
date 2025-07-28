@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "text": {
+      "type": "string",
+      "description": "Text content to generate questions from"
+    },
+    "numberOfQuestions": {
+      "type": "number",
+      "description": "Number of questions to generate",
+      "default": 5
+    }
+  },
+  "required": [
+    "text"
+  ]
+}

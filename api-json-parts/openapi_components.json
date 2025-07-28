@@ -1,0 +1,735 @@
+{
+  "components": {
+    "securitySchemes": {
+      "JWT-auth": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http",
+        "name": "JWT",
+        "description": "JWT Bearer token ile kimlik doğrulama",
+        "in": "header"
+      }
+    },
+    "schemas": {
+      "SignupDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "test@example.com",
+            "description": "User email"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123",
+            "description": "User password"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "John",
+            "description": "User first name"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Doe",
+            "description": "User last name"
+          }
+        },
+        "required": [
+          "email",
+          "password",
+          "firstName",
+          "lastName"
+        ]
+      },
+      "AuthDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "test@example.com",
+            "description": "User email"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123",
+            "description": "User password"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "VerifyEmailDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "abc123def456",
+            "description": "Email verification token"
+          }
+        },
+        "required": [
+          "token"
+        ]
+      },
+      "ResendVerificationDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "test@example.com",
+            "description": "User email"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "ForgotPasswordDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "test@example.com",
+            "description": "User email"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "ResetPasswordDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "abc123def456",
+            "description": "Password reset token"
+          },
+          "newPassword": {
+            "type": "string",
+            "example": "newpassword123",
+            "description": "New password"
+          }
+        },
+        "required": [
+          "token",
+          "newPassword"
+        ]
+      },
+      "ChangePasswordDto": {
+        "type": "object",
+        "properties": {
+          "currentPassword": {
+            "type": "string",
+            "example": "oldpassword123",
+            "description": "Current password"
+          },
+          "newPassword": {
+            "type": "string",
+            "example": "newpassword123",
+            "description": "New password"
+          }
+        },
+        "required": [
+          "currentPassword",
+          "newPassword"
+        ]
+      },
+      "SummarizeContentDto": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Text content to summarize"
+          },
+          "videoUrl": {
+            "type": "string",
+            "description": "URL of the video (optional)"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the content (optional)"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "SummarizeFileDto": {
+        "type": "object",
+        "properties": {
+          "filePath": {
+            "type": "string",
+            "description": "Path to the file to summarize"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the content (optional)"
+          }
+        },
+        "required": [
+          "filePath"
+        ]
+      },
+      "GenerateQuizQuestionsDto": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Text content to generate questions from"
+          },
+          "numberOfQuestions": {
+            "type": "number",
+            "description": "Number of questions to generate",
+            "default": 5
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "AnalyzeContentWorkflowDto": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Text content to analyze with LangGraph workflow"
+          },
+          "analysisType": {
+            "type": "string",
+            "description": "Type of analysis to perform",
+            "enum": [
+              "summary",
+              "detailed",
+              "educational"
+            ],
+            "default": "summary"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      },
+      "CreateLessonDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the lesson"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the lesson"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Subject of the lesson"
+          },
+          "topic": {
+            "type": "string",
+            "description": "Topic of the lesson"
+          },
+          "difficulty": {
+            "type": "string",
+            "description": "Difficulty level of the lesson"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "LESSON",
+              "VIDEO",
+              "QUIZ",
+              "EXERCISE",
+              "INTERACTIVE"
+            ],
+            "description": "Type of content (e.g., LESSON, VIDEO, QUIZ)"
+          },
+          "duration": {
+            "type": "number",
+            "description": "Duration of the lesson in minutes"
+          },
+          "thumbnail": {
+            "type": "string",
+            "description": "Thumbnail URL"
+          },
+          "tags": {
+            "description": "Tags for the lesson",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "prerequisites": {
+            "description": "Prerequisites for the lesson",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "learningObjectives": {
+            "description": "Learning objectives of the lesson",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "subject",
+          "difficulty",
+          "type"
+        ]
+      },
+      "UpdateLessonDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the lesson"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the lesson"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Subject of the lesson"
+          },
+          "topic": {
+            "type": "string",
+            "description": "Topic of the lesson"
+          },
+          "difficulty": {
+            "type": "string",
+            "description": "Difficulty level of the lesson"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "LESSON",
+              "VIDEO",
+              "QUIZ",
+              "EXERCISE",
+              "INTERACTIVE"
+            ],
+            "description": "Type of content (e.g., LESSON, VIDEO, QUIZ)"
+          },
+          "duration": {
+            "type": "number",
+            "description": "Duration of the lesson in minutes"
+          },
+          "thumbnail": {
+            "type": "string",
+            "description": "Thumbnail URL"
+          },
+          "tags": {
+            "description": "Tags for the lesson",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "prerequisites": {
+            "description": "Prerequisites for the lesson",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "learningObjectives": {
+            "description": "Learning objectives of the lesson",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "CreateQuizDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "description": "ID of the lesson this quiz belongs to (optional)"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the quiz"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the quiz"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Subject of the quiz"
+          },
+          "topic": {
+            "type": "string",
+            "description": "Topic of the quiz"
+          },
+          "difficulty": {
+            "type": "string",
+            "description": "Difficulty level of the quiz"
+          },
+          "quizType": {
+            "type": "string",
+            "enum": [
+              "MULTIPLE_CHOICE",
+              "OPEN_ENDED",
+              "DRAG_DROP"
+            ],
+            "description": "Type of quiz (e.g., MULTIPLE_CHOICE, OPEN_ENDED)"
+          },
+          "questionCount": {
+            "type": "number",
+            "description": "Number of questions in the quiz"
+          },
+          "passingScore": {
+            "type": "number",
+            "description": "Passing score for the quiz (percentage)"
+          },
+          "questions": {
+            "type": "object",
+            "description": "JSON array of question objects"
+          }
+        },
+        "required": [
+          "title",
+          "subject",
+          "difficulty",
+          "quizType",
+          "questionCount",
+          "passingScore",
+          "questions"
+        ]
+      },
+      "UpdateQuizDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "description": "ID of the lesson this quiz belongs to (optional)"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the quiz"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the quiz"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Subject of the quiz"
+          },
+          "topic": {
+            "type": "string",
+            "description": "Topic of the quiz"
+          },
+          "difficulty": {
+            "type": "string",
+            "description": "Difficulty level of the quiz"
+          },
+          "quizType": {
+            "type": "string",
+            "enum": [
+              "MULTIPLE_CHOICE",
+              "OPEN_ENDED",
+              "DRAG_DROP"
+            ],
+            "description": "Type of quiz (e.g., MULTIPLE_CHOICE, OPEN_ENDED)"
+          },
+          "questionCount": {
+            "type": "number",
+            "description": "Number of questions in the quiz"
+          },
+          "passingScore": {
+            "type": "number",
+            "description": "Passing score for the quiz (percentage)"
+          },
+          "questions": {
+            "type": "object",
+            "description": "JSON array of question objects"
+          }
+        }
+      },
+      "CreateAchievementDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the achievement",
+            "example": "Quiz Master"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the achievement",
+            "example": "Complete 10 quizzes with 80% or higher score"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the achievement",
+            "enum": [
+              "PROGRESS",
+              "SUBJECT_MASTERY",
+              "SOCIAL",
+              "GAMIFICATION",
+              "SPECIAL"
+            ]
+          },
+          "points": {
+            "type": "number",
+            "description": "Points awarded for this achievement",
+            "example": 100,
+            "minimum": 1
+          },
+          "icon": {
+            "type": "string",
+            "description": "Icon identifier for the achievement",
+            "example": "trophy-icon"
+          },
+          "requirement": {
+            "type": "number",
+            "description": "Requirement value to unlock this achievement",
+            "example": 10,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "category",
+          "points",
+          "requirement"
+        ]
+      },
+      "CreateNotificationDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "ConnectStudentDto": {
+        "type": "object",
+        "properties": {
+          "studentEmail": {
+            "type": "string",
+            "description": "Öğrencinin email adresi",
+            "example": "student@example.com"
+          },
+          "inviteCode": {
+            "type": "string",
+            "description": "Bağlantı için özel davet kodu",
+            "example": "ABC123"
+          }
+        },
+        "required": [
+          "studentEmail"
+        ]
+      },
+      "SendNotificationDto": {
+        "type": "object",
+        "properties": {
+          "receiverId": {
+            "type": "string",
+            "description": "Alıcı ID'si",
+            "example": "uuid-string"
+          },
+          "title": {
+            "type": "string",
+            "description": "Bildirim başlığı",
+            "example": "Tebrikler!"
+          },
+          "message": {
+            "type": "string",
+            "description": "Bildirim mesajı",
+            "example": "Matematik quizinde harika bir performans sergiledi!"
+          },
+          "type": {
+            "type": "string",
+            "description": "Bildirim tipi",
+            "example": "achievement",
+            "enum": [
+              "achievement",
+              "progress",
+              "quiz_completed",
+              "lesson_completed",
+              "parent_request",
+              "encouragement"
+            ]
+          },
+          "data": {
+            "type": "object",
+            "description": "Ek veri (JSON format)",
+            "example": {
+              "quizScore": 95,
+              "subject": "Mathematics"
+            }
+          }
+        },
+        "required": [
+          "receiverId",
+          "title",
+          "message",
+          "type"
+        ]
+      },
+      "UpdateUserProfileDto": {
+        "type": "object",
+        "properties": {
+          "age": {
+            "type": "number",
+            "description": "User age"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "OTHER",
+              "PREFER_NOT_TO_SAY"
+            ],
+            "description": "User gender"
+          },
+          "gradeLevel": {
+            "type": "string",
+            "enum": [
+              "GRADE_1",
+              "GRADE_2",
+              "GRADE_3",
+              "GRADE_4",
+              "GRADE_5",
+              "GRADE_6",
+              "GRADE_7",
+              "GRADE_8",
+              "GRADE_9",
+              "GRADE_10",
+              "GRADE_11",
+              "GRADE_12"
+            ],
+            "description": "User grade level"
+          },
+          "learningStyle": {
+            "type": "string",
+            "enum": [
+              "VISUAL",
+              "AUDITORY",
+              "KINESTHETIC",
+              "READ_WRITE"
+            ],
+            "description": "Preferred learning style"
+          },
+          "interests": {
+            "description": "User interests",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "goals": {
+            "description": "Learning goals",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "studyHours": {
+            "type": "number",
+            "description": "Preferred daily study hours"
+          },
+          "difficultyPreference": {
+            "type": "string",
+            "description": "Difficulty preference"
+          },
+          "weakSubjects": {
+            "description": "Known weak subjects",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "OnboardingQuizDto": {
+        "type": "object",
+        "properties": {
+          "subjects": {
+            "description": "Subjects to assess",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "questionsPerSubject": {
+            "type": "number",
+            "description": "Number of questions per subject"
+          }
+        },
+        "required": [
+          "subjects"
+        ]
+      },
+      "OnboardingQuizAnswerDto": {
+        "type": "object",
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "description": "Quiz question ID"
+          },
+          "answer": {
+            "type": "string",
+            "description": "User answer"
+          },
+          "subject": {
+            "type": "string",
+            "description": "Subject of the question"
+          }
+        },
+        "required": [
+          "questionId",
+          "answer",
+          "subject"
+        ]
+      },
+      "SubmitOnboardingQuizDto": {
+        "type": "object",
+        "properties": {
+          "answers": {
+            "description": "Quiz answers",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OnboardingQuizAnswerDto"
+            }
+          }
+        },
+        "required": [
+          "answers"
+        ]
+      },
+      "PersonalizedHomepageDto": {
+        "type": "object",
+        "properties": {
+          "lessonCount": {
+            "type": "number",
+            "description": "Number of recommended lessons"
+          },
+          "includeQuizzes": {
+            "type": "boolean",
+            "description": "Include quiz recommendations"
+          },
+          "includeProgress": {
+            "type": "boolean",
+            "description": "Include progress analytics"
+          }
+        }
+      },
+      "CreateMessageDto": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}
