@@ -16,7 +16,7 @@ export default function ForgotPassword() {
     setSuccess('');
 
     try {
-      const response = await fetch('http://localhost:3001/auth/forgot-password', {
+      const response = await fetch('http://localhost:3000/auth/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ export default function ForgotPassword() {
           </div>
           
           <div className="text-center">
-            <Link href="/auth/signin" className="font-medium text-indigo-600 hover:text-indigo-500">
+            <Link href="/auth/login" className="font-medium text-indigo-600 hover:text-indigo-500">
               Giriş sayfasına dön
             </Link>
           </div>

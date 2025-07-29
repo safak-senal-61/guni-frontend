@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { User } from '@/lib/api';
 
 interface Patient {
   id: string;
@@ -33,13 +34,11 @@ interface Medication {
 
 export default function Medications() {
   const [medications, setMedications] = useState<Medication[]>([]);
-  const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeFilter, setActiveFilter] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingMedication, setEditingMedication] = useState<Medication | null>(null);
   const [formData, setFormData] = useState({
@@ -64,12 +63,12 @@ export default function Medications() {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
-          router.push('/auth/signin');
+          router.push('/login');
           return;
         }
 
         // Fetch current user
-        const meResponse = await fetch('http://localhost:3001/auth/me', {
+        const meResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'}/auth/me`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -77,7 +76,7 @@ export default function Medications() {
 
         if (!meResponse.ok) {
           localStorage.removeItem('token');
-          router.push('/auth/signin');
+          router.push('/login');
           return;
         }
 
@@ -85,7 +84,7 @@ export default function Medications() {
         setCurrentUser(userData);
 
         // Fetch medications
-        const medicationsResponse = await fetch('http://localhost:3001/medications', {
+        const medicationsResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'}/medications`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -115,8 +114,8 @@ export default function Medications() {
     try {
       const token = localStorage.getItem('token');
       const url = editingMedication 
-        ? `http://localhost:3001/medications/${editingMedication.id}`
-        : 'http://localhost:3001/medications';
+        ? `${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'}/medications/${editingMedication.id}`
+        : `${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'}/medications`;
       
       const method = editingMedication ? 'PUT' : 'POST';
 
@@ -196,7 +195,7 @@ export default function Medications() {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:3001/medications/${medicationId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'}/medications/${medicationId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

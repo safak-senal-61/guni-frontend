@@ -91,7 +91,7 @@ bun dev
 ```
 
 ### 4. Tarayıcıda açın
-[http://localhost:3001](http://localhost:3001) adresini ziyaret edin.
+[http://localhost:3000](http://localhost:3000) adresini ziyaret edin.
 
 ## 📁 Proje Yapısı
 

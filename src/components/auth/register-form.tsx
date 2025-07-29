@@ -45,17 +45,21 @@ export default function RegisterForm() {
         password: formData.password
       };
       
+      console.log('Signup attempt:', { email: formData.email, firstName: formData.firstName, lastName: formData.lastName });
       const response = await signup(userData);
 
       if (response.data) {
+        console.log('Signup successful:', response.data);
         setSuccess('Kayıt başarılı! Dashboard\'a yönlendiriliyorsunuz...');
         setTimeout(() => {
           router.push('/dashboard');
         }, 2000);
       } else {
+        console.error('Signup failed:', response.error);
         setError(response.error || 'Kayıt başarısız');
       }
     } catch (err) {
+      console.error('Signup error:', err);
       setError('Bağlantı hatası');
     } finally {
       setLoading(false);

@@ -32,11 +32,11 @@ export default function Profile() {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
-          router.push('/auth/signin');
+          router.push('/login');
           return;
         }
 
-        const response = await fetch('http://localhost:3001/auth/me', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'}/auth/me`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -52,12 +52,12 @@ export default function Profile() {
           });
         } else {
           localStorage.removeItem('token');
-          router.push('/auth/signin');
+          router.push('/login');
         }
       } catch (err) {
         setError('Kullanıcı bilgileri alınamadı');
         localStorage.removeItem('token');
-        router.push('/auth/signin');
+        router.push('/login');
       } finally {
         setLoading(false);
       }
@@ -81,7 +81,7 @@ export default function Profile() {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3001/users/profile', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'}/users/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

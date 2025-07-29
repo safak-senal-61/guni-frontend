@@ -3,6 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { resetPassword } from '@/lib/api';
+
+// Disable static generation for this page
+export const dynamic = 'force-dynamic';
 
 export default function ResetPassword() {
   const [password, setPassword] = useState('');
@@ -43,25 +47,13 @@ export default function ResetPassword() {
     }
 
     try {
-      const response = await fetch('http://localhost:3001/auth/reset-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token, password }),
-      });
-
-      if (response.ok) {
-        setSuccess('Şifreniz başarıyla sıfırlandı. Giriş sayfasına yönlendiriliyorsunuz...');
-        setTimeout(() => {
-          router.push('/auth/signin');
-        }, 2000);
-      } else {
-        const errorData = await response.json();
-        setError(errorData.message || 'Şifre sıfırlama başarısız');
-      }
-    } catch (err) {
-      setError('Bağlantı hatası');
+      await resetPassword({ token, newPassword: password });
+      setSuccess('Şifreniz başarıyla sıfırlandı. Giriş sayfasına yönlendiriliyorsunuz...');
+      setTimeout(() => {
+        router.push('/auth/login');
+      }, 2000);
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : 'Şifre sıfırlama başarısız');
     } finally {
       setLoading(false);
     }
@@ -138,7 +130,7 @@ export default function ResetPassword() {
           </div>
           
           <div className="text-center">
-            <Link href="/auth/signin" className="font-medium text-indigo-600 hover:text-indigo-500">
+            <Link href="/auth/login" className="font-medium text-indigo-600 hover:text-indigo-500">
               Giriş sayfasına dön
             </Link>
           </div>

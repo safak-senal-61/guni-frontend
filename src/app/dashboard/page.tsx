@@ -24,10 +24,16 @@ export default function Dashboard() {
           setUser(response.data);
         } else {
           setError('Kullanıcı bilgileri alınamadı');
+          // Clear any invalid tokens
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('refresh_token');
           router.push('/login');
         }
       } catch (err) {
         setError('Kullanıcı bilgileri alınamadı');
+        // Clear any invalid tokens
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
         router.push('/login');
       } finally {
         setLoading(false);
@@ -41,8 +47,11 @@ export default function Dashboard() {
     try {
       await logout();
       router.push('/login');
-    } catch (err) {
-      console.error('Logout error:', err);
+    } catch (error: unknown) {
+      console.error('Logout failed:', error);
+      // Even if logout fails, clear tokens and redirect to login
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
       router.push('/login');
     }
   };

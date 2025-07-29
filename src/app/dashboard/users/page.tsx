@@ -29,12 +29,12 @@ export default function Users() {
       try {
         const token = localStorage.getItem('token');
         if (!token) {
-          router.push('/auth/signin');
+          router.push('/login');
           return;
         }
 
         // Fetch current user to check permissions
-        const meResponse = await fetch('http://localhost:3001/auth/me', {
+        const meResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'}/auth/me`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -42,7 +42,7 @@ export default function Users() {
 
         if (!meResponse.ok) {
           localStorage.removeItem('token');
-          router.push('/auth/signin');
+          router.push('/login');
           return;
         }
 
@@ -56,7 +56,7 @@ export default function Users() {
         }
 
         // Fetch all users
-        const usersResponse = await fetch('http://localhost:3001/users', {
+        const usersResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'}/users`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -113,7 +113,7 @@ export default function Users() {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:3001/users/${userId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000'}/users/${userId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

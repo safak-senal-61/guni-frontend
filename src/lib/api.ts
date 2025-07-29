@@ -1,8 +1,8 @@
 // API Base Configuration
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
 // API Response Types
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   data?: T;
   message?: string;
   error?: string;
@@ -90,19 +90,71 @@ class ApiClient {
     }
 
     try {
+      console.log('API Request:', { url, method: config.method || 'GET', headers: config.headers });
       const response = await fetch(url, config);
-      const data = await response.json();
+      
+      let data;
+      try {
+        data = await response.json();
+      } catch (jsonError) {
+        console.error('JSON parse error:', jsonError);
+        data = { message: 'Invalid JSON response' };
+      }
+
+      console.log('API Response:', { status: response.status, statusText: response.statusText, data });
 
       if (!response.ok) {
+        // Handle 401 Unauthorized - try to refresh token
+        if (response.status === 401 && endpoint !== '/auth/refresh' && endpoint !== '/auth/signin') {
+          const refreshResult = await this.refreshToken();
+          if (refreshResult.data) {
+            // Retry the original request with new token
+            const retryConfig = { ...config };
+            retryConfig.headers = {
+              ...retryConfig.headers,
+              Authorization: `Bearer ${this.getToken()}`,
+            };
+            
+            const retryResponse = await fetch(url, retryConfig);
+            let retryData;
+            try {
+              retryData = await retryResponse.json();
+            } catch {
+              retryData = { message: 'Invalid JSON response' };
+            }
+            
+            if (retryResponse.ok) {
+              return { data: retryData };
+            }
+          }
+          // If refresh failed or retry failed, remove tokens and redirect to login
+          this.removeTokens();
+          if (typeof window !== 'undefined') {
+            window.location.href = '/login';
+          }
+        }
+        
+        // If we get here and it's still 401, remove tokens and redirect
+        if (response.status === 401) {
+          this.removeTokens();
+          if (typeof window !== 'undefined') {
+            window.location.href = '/login';
+          }
+        }
+        
+        const errorMessage = data.message || `HTTP error! status: ${response.status}`;
+        console.error('API Error:', errorMessage);
         return {
-          error: data.message || `HTTP error! status: ${response.status}`,
+          error: errorMessage,
         };
       }
 
       return { data };
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Network error occurred';
+      console.error('Network Error:', error);
       return {
-        error: error instanceof Error ? error.message : 'Network error occurred',
+        error: errorMessage,
       };
     }
   }
@@ -240,16 +292,14 @@ class ApiClient {
 export const apiClient = new ApiClient();
 
 // Export individual methods for convenience
-export const {
-  signin,
-  signup,
-  logout,
-  getMe,
-  refreshToken,
-  forgotPassword,
-  resetPassword,
-  verifyEmail,
-  resendVerification,
-  isAuthenticated,
-  getCurrentToken,
-} = apiClient;
+export const signin = (credentials: AuthDto) => apiClient.signin(credentials);
+export const signup = (userData: SignupDto) => apiClient.signup(userData);
+export const logout = () => apiClient.logout();
+export const getMe = () => apiClient.getMe();
+export const refreshToken = () => apiClient.refreshToken();
+export const forgotPassword = (email: ForgotPasswordDto) => apiClient.forgotPassword(email);
+export const resetPassword = (resetData: ResetPasswordDto) => apiClient.resetPassword(resetData);
+export const verifyEmail = (verificationData: VerifyEmailDto) => apiClient.verifyEmail(verificationData);
+export const resendVerification = (email: ResendVerificationDto) => apiClient.resendVerification(email);
+export const isAuthenticated = () => apiClient.isAuthenticated();
+export const getCurrentToken = () => apiClient.getCurrentToken();

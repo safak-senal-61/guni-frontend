@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { User } from '@/lib/api';
 
 interface Patient {
   id: string;
@@ -26,7 +27,7 @@ export default function Patients() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingPatient, setEditingPatient] = useState<Patient | null>(null);
@@ -48,22 +49,23 @@ export default function Patients() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('access_token');
         if (!token) {
-          router.push('/auth/signin');
+          router.push('/login');
           return;
         }
 
         // Fetch current user
-        const meResponse = await fetch('http://localhost:3001/auth/me', {
+        const meResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/auth/me`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
         });
 
         if (!meResponse.ok) {
-          localStorage.removeItem('token');
-          router.push('/auth/signin');
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('refresh_token');
+          router.push('/login');
           return;
         }
 
@@ -71,7 +73,7 @@ export default function Patients() {
         setCurrentUser(userData);
 
         // Fetch patients
-        const patientsResponse = await fetch('http://localhost:3001/patients', {
+        const patientsResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/patients`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -99,10 +101,10 @@ export default function Patients() {
     setSuccess('');
 
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('access_token');
       const url = editingPatient 
-        ? `http://localhost:3001/patients/${editingPatient.id}`
-        : 'http://localhost:3001/patients';
+        ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/patients/${editingPatient.id}`
+        : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/patients`;
       
       const method = editingPatient ? 'PUT' : 'POST';
 
@@ -177,8 +179,8 @@ export default function Patients() {
     }
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:3001/patients/${patientId}`, {
+      const token = localStorage.getItem('access_token');
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/patients/${patientId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

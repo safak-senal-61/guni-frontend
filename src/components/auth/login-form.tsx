@@ -19,15 +19,19 @@ export default function LoginForm() {
 
     try {
       const credentials: AuthDto = { email, password };
+      console.log('Login attempt:', { email });
       const response = await signin(credentials);
 
       if (response.data) {
+        console.log('Login successful:', response.data);
         // Başarılı giriş - dashboard'a yönlendir
         router.push('/dashboard');
       } else {
+        console.error('Login failed:', response.error);
         setError(response.error || 'Giriş başarısız');
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError('Bağlantı hatası');
     } finally {
       setLoading(false);
