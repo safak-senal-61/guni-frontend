@@ -11,12 +11,24 @@ interface User {
   role: string;
 }
 
-// Login işleminden dönen yanıtın tipini tanımlıyoruz
-interface LoginResponse {
-  user: User;
-  accessToken: string;
-  // refreshToken?: string; 
-}
+// API yanıtının olası tüm yapılarını içeren tip tanımı
+type ApiResponse = {
+  user?: User;
+  accessToken?: string;
+  token?: string;
+  id?: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  role?: string;
+  data?: {
+    user?: User;
+    accessToken?: string;
+    token?: string;
+  };
+  message?: string;
+};
+
 
 interface AuthState {
   user: User | null;
@@ -45,32 +57,26 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       console.log('[AuthStore] Login işlemi başlatıldı...');
       const response = await apiAuth.signin(data);
       
-      // API yanıtının tüm yapısını detaylı şekilde loglayalım
       console.log('[AuthStore] Tam API Yanıtı:', response);
       console.log('[AuthStore] Response Data:', response.data);
-      console.log('[AuthStore] Response Data Keys:', Object.keys(response.data || {}));
-      console.log('[AuthStore] Response Data Type:', typeof response.data);
       
-      // Gelen veriyi kontrol edelim
-      const responseData = response.data;
+      const responseData = response.data as ApiResponse;
       
-      // Farklı olası response yapılarını kontrol edelim
-      let user: User;
-      let accessToken: string;
+      console.log('[AuthStore] Response Data Keys:', Object.keys(responseData || {}));
       
-      // Senaryo 1: Direkt user ve accessToken alanları varsa
+      let user: User | undefined;
+      let accessToken: string | undefined;
+      
       if (responseData.user && responseData.accessToken) {
         user = responseData.user;
         accessToken = responseData.accessToken;
         console.log('[AuthStore] Senaryo 1: user ve accessToken direkt bulundu');
       }
-      // Senaryo 2: token yerine accessToken alanı varsa
       else if (responseData.user && responseData.token) {
         user = responseData.user;
         accessToken = responseData.token;
         console.log('[AuthStore] Senaryo 2: user ve token alanı bulundu');
       }
-      // Senaryo 3: Kullanıcı bilgileri direkt response.data'da, token ayrı alanda
       else if (responseData.id && responseData.email && (responseData.accessToken || responseData.token)) {
         user = {
           id: responseData.id,
@@ -82,23 +88,20 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         accessToken = responseData.accessToken || responseData.token;
         console.log('[AuthStore] Senaryo 3: Kullanıcı bilgileri düz response\'da bulundu');
       }
-      // Senaryo 4: Data bir üst seviyede wrap edilmiş olabilir
       else if (responseData.data && responseData.data.user && (responseData.data.accessToken || responseData.data.token)) {
         user = responseData.data.user;
         accessToken = responseData.data.accessToken || responseData.data.token;
         console.log('[AuthStore] Senaryo 4: Data bir üst seviyede wrap edilmiş');
       }
-      // Senaryo 5: JWT token decode edilebilir mi kontrol edelim
       else if (responseData.accessToken || responseData.token) {
         accessToken = responseData.accessToken || responseData.token;
-        // JWT token'dan user bilgisini çıkarmaya çalışalım (eğer mümkünse)
         try {
+          if (!accessToken) throw new Error('Token değeri boş.');
           const tokenParts = accessToken.split('.');
           if (tokenParts.length === 3) {
             const payload = JSON.parse(atob(tokenParts[1]));
             console.log('[AuthStore] JWT Payload:', payload);
             
-            // JWT'den user bilgisini çıkarmaya çalışalım
             if (payload.id || payload.userId || payload.sub) {
               user = {
                 id: payload.id || payload.userId || payload.sub,
@@ -119,31 +122,20 @@ export const useAuthStore = create<AuthState>((set, get) => ({
           throw new Error('Token var ancak kullanıcı bilgisi eksik');
         }
       }
-      else {
-        // Hiçbir senaryo uymazsa detaylı hata mesajı verelim
-        console.error('[AuthStore] Desteklenmeyen API yanıt yapısı:');
-        console.error('- response.data:', responseData);
-        console.error('- Mevcut alanlar:', Object.keys(responseData || {}));
-        
-        throw new Error(`API yanıtı beklenen formatta değil. 
-          Mevcut alanlar: ${Object.keys(responseData || {}).join(', ')}
-          Beklenen alanlar: user+accessToken, user+token, veya direkt kullanıcı bilgileri`);
+      
+      // **DÜZELTME:** user ve accessToken'ın varlığını kontrol ettikten sonra fonksiyonu çağırıyoruz.
+      // Bu yapı TypeScript'e bu blok içinde değişkenlerin tanımsız olmadığını garanti eder.
+      if (user && user.id && user.email && accessToken) {
+        console.log('[AuthStore] Login başarılı. User:', user);
+        get().setUserAndToken(user, accessToken);
+      } else {
+        console.error('[AuthStore] Desteklenmeyen API yanıt yapısı veya eksik bilgi:', responseData);
+        throw new Error('Kullanıcı bilgileri veya token alınamadı.');
       }
-      
-      // Son kontrol: user ve token'ın geçerli olduğundan emin olalım
-      if (!user || !user.id || !user.email || !accessToken) {
-        throw new Error('Kullanıcı bilgileri veya token eksik/geçersiz');
-      }
-      
-      console.log('[AuthStore] Login başarılı. User:', user);
-      console.log('[AuthStore] Token mevcut:', !!accessToken);
-      
-      get().setUserAndToken(user, accessToken);
       
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || err.message || 'Giriş yapılamadı.';
-      console.error('[AuthStore] Login hatası:', errorMessage);
-      console.error('[AuthStore] Hata detayı:', err);
+      console.error('[AuthStore] Login hatası:', errorMessage, err);
       set({ error: errorMessage, isAuthenticated: false, isLoading: false });
       throw err;
     }

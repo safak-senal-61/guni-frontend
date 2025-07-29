@@ -31,7 +31,8 @@ export function SignupForm() {
   const onSubmit = async (data: SignupFormValues) => {
     try {
       await signup(data);
-      router.push('/dashboard'); // Başarılı kayıt sonrası yönlendirme
+      // YÖNLENDİRME GÜNCELLENDİ: Kullanıcıyı onboarding'in ilk adımına yönlendiriyoruz.
+      router.push('/onboarding/profile-setup'); 
     } catch (err) {
       console.error("Signup failed:", err);
     }
