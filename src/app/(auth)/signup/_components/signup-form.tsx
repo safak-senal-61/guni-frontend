@@ -32,7 +32,7 @@ export function SignupForm() {
     try {
       await signup(data);
       // YÖNLENDİRME GÜNCELLENDİ: Kullanıcıyı onboarding'in ilk adımına yönlendiriyoruz.
-      router.push('/onboarding/profile-setup'); 
+      router.push('/profile-setup'); 
     } catch (err) {
       console.error("Signup failed:", err);
     }
