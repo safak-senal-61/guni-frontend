@@ -8,6 +8,7 @@ export interface SignupDto {
   export interface AuthDto {
     email: string;
     password: string;
+    rememberMe?: boolean;
   }
   
   export interface VerifyEmailDto {
